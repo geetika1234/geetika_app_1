@@ -1,0 +1,62 @@
+<%= form_for product, :url => { :action => form_action, :method => :post } do |f| %>
+	<% 
+		tag_values = ''
+		image_values = ''
+		category_values = ''
+	
+		unless product.tags.blank?
+			product.tags.each do |x|
+				tag_values = tag_values + x.tag_value + ","
+			end 
+			tag_values=tag_values[0...-1]
+		end
+
+		unless product.categories.blank?
+			product.categories.each do |x|
+				category_values = category_values + x.category_name + ","
+			end 
+			category_values=category_values[0...-1]
+		end
+
+		unless product.images.blank?
+			product.images.each do |x|
+				image_values = image_values + x.path + ","
+			end 
+			image_values=image_values[0...-1]
+		end %>
+
+ <table style="width: 700px"><tbody>
+ 	<tr>
+		<td> Name: </td>
+		<td> <%= f.text_field :name %> </td>
+	</tr>
+	<tr>
+		<td> Sku: </td>
+		<td> <%= f.text_field :sku %> </td>
+	</tr>
+	<tr>
+		<td> Price: </td>
+		<td> <%= f.number_field :price %> </td>
+	</tr>
+	<tr>
+		<td> Expire date: </td>
+		<td> <%= f.date_select :expire_date %> </td>
+	</tr>
+	<tr>
+		<td> Tags </td>
+		<td> <%= text_field_tag :tags , tag_values %> </td>
+		<td>*Write all the tag names comma seperated.</td>
+	</tr>
+	<tr>
+		<td> Categories </td>
+		<td> <%= text_field_tag :categories ,category_values %> </td>
+		<td>*Write all the categories comma seperated.</td>
+	</tr>
+	<tr>
+		<td> Images </td>
+		<td> <%= text_field_tag :images ,image_values ,:readonly => form_action.to_s != 'create' %> </td>
+		<td>*non editable , Write all the categories comma seperated.</td>
+	</tr>
+ </tbody></table> 
+ <%= f.submit form_action.to_s.capitalize %>
+<% end %>

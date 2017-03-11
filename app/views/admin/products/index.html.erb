@@ -1,0 +1,32 @@
+<style>
+	.td_width {
+		width: 20%;
+	}
+</style>
+<h1>Configuration for Products</h1>
+<table>
+		<tr>
+			<th class="td_width">thumbnail</th>
+			<th class="td_width">name</th>
+			<th class="td_width">sku</th>
+			<th class="td_width">Price</th>
+			<th class="td_width">expire date</th>
+			<th class="td_width">Action</th>
+		</tr>
+		<br />
+		<% @products.each do |product|%>
+			<tr>
+				<% if !product.images.blank? %>
+					<td><img width=100px; height=100px; src="<%= product.images.first.path %>"></td>
+				<% else %>
+					<td></td>
+				<% end %>
+				<td><%= product.name unless product.name.nil?  %></td>
+				<td><%= product.sku unless product.sku.nil? %></td>
+				<td><%= product.price unless product.price.nil? %></td>
+				<td><%= product.expire_date unless product.expire_date.nil? %></td>
+				<td><%= link_to "Edit", :action => "edit", :id => product.id %></td>
+			</tr>
+		<% end %>
+		<tr><td></td><td></td><td></td><td></td><td></td><td><%= link_to "Create New", :action => "new" %></td></tr>
+	</table>
